@@ -1,0 +1,25 @@
+# Versions below are floors (>=), not exact pins. This project targets
+# Python 3.14, which is new enough that many packages only ship prebuilt
+# wheels (no Rust/C compiler needed) in their *latest* releases. Pinning
+# exact old versions (as this file originally did) causes pip to try to
+# build packages like pydantic-core/bcrypt/cryptography from source on
+# Windows, which fails without a Rust/MSVC toolchain. Letting pip resolve
+# to the newest compatible release avoids that.
+fastapi>=0.118.0
+uvicorn[standard]>=0.35.0
+sqlalchemy>=2.0.38
+python-jose[cryptography]>=3.4.0
+# passlib (last released 2020) is unmaintained and breaks with modern
+# bcrypt releases (raises "module 'bcrypt' has no attribute '__about__'").
+# We call the bcrypt library directly instead - see backend/utils/auth.py.
+bcrypt>=5.0.0
+python-dotenv>=1.0.1
+pydantic>=2.11.0
+pydantic-settings>=2.8.0
+python-multipart>=0.0.20
+# Old google-generativeai SDK is deprecated (shut down Nov 30, 2025) and
+# its grpcio/protobuf pins don't have Python 3.14 wheels -> replaced with
+# the current, actively maintained Google Gen AI SDK (REST-based, no grpc).
+google-genai>=1.0.0
+email-validator>=2.2.0
+requests>=2.32.3
